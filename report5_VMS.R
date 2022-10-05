@@ -9,15 +9,12 @@ library(sf)
 source("bootstrap/utilities.r")
 
 # set values for automatic naming of files:
-cap_year <- 2021
-cap_month <- "November"
+cap_year <- 2022
+cap_month <- "October"
 ecoreg_code <- "ONA"
 ecoreg <- "ONA"
 
 mkdir("report")
-
-# file name utilitiy
-source("bootstrap/utilities.r")
 
 
 ecoregion <-
@@ -69,27 +66,27 @@ write_layer <- function(dat, fname) {
   zip(paste0("report/", fname, ".zip"), files, extras = "-j")
   file.remove(files)
 }
-write_layer(effort, paste0(year_cap, "_", ecoreg,"_FO_VMS_effort"))
+write_layer(effort, paste0(cap_year, "_", ecoreg,"_FO_VMS_effort"))
 
 # save plot
 plot_effort_map(effort, ecoregion) +
-  ggtitle("Average MW Fishing hours 2017-2020")
+  ggtitle("Average MW Fishing hours 2018-2021")
 
-ggsave(file_name(cap_year,ecoreg_code,"VMS_effort", ext = "png"), path = "report", width = 170, height = 200, units = "mm", dpi = 300)
 
+ggsave(file_name(cap_year,ecoreg_code,"VMS_effort", ext = "png", dir = "report"), width = 170, height = 200, units = "mm", dpi = 300)
 # ~~~~~~~~~~~~~~~#
 # A. Swept area map
 # ~~~~~~~~~~~~~~~#
 
 # write layer
-write_layer(sar, paste0(year_cap, "_", ecoreg,"_FO_VMS_sar"))
+write_layer(sar, paste0(cap_year, "_", ecoreg,"_FO_VMS_sar"))
 
 plot_sar_map(sar, ecoregion, what = "surface") +
-  ggtitle("Average surface swept area ratio 2017-2020")
+  ggtitle("Average surface swept area ratio 2018-2021")
 
-ggsave(file_name(cap_year,ecoreg_code,"VMS_sarA", ext = "png"), path = "report", width = 170, height = 200, units = "mm", dpi = 300)
+ggsave(file_name(cap_year,ecoreg_code,"VMS_sarA", ext = "png", dir = "report"), width = 170, height = 200, units = "mm", dpi = 300)
 
 plot_sar_map(sar, ecoregion, what = "subsurface") +
-  ggtitle("Average subsurface swept area ratio 2017-2020")
+  ggtitle("Average subsurface swept area ratio 2018-2021")
 
-ggsave(file_name(cap_year,ecoreg_code,"VMS_sarB", ext = "png"), path = "report", width = 170, height = 200, units = "mm", dpi = 300)
+ggsave(file_name(cap_year,ecoreg_code,"VMS_sarB", ext = "png", dir = "report"), width = 170, height = 200, units = "mm", dpi = 300)
