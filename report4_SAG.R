@@ -9,8 +9,8 @@ library(dplyr)
 source("bootstrap/utilities.r")
 
 # set values for automatic naming of files:
-cap_year <- 2021
-cap_month <- "November"
+cap_year <- 2022
+cap_month <- "October"
 ecoreg_code <- "ONA"
 ecoreg <- "ONA"
 ##########
@@ -23,12 +23,9 @@ catch_trends <- read.taf("model/catch_trends.csv")
 
 clean_status <- read.taf("data/clean_status.csv")
 
-#set year and month for captions:
-cap_month = "November"
-cap_year = "2021"
 # set year for plot calculations
 
-year = 2021
+year = 2022
 
 
 ###########
@@ -51,7 +48,10 @@ write.taf(dat, file = file_name(cap_year,ecoreg_code,"SAG_Trends_demersal", ext 
 
 # 2. Pelagic
 #~~~~~~~~~~~
-plot_stock_trends(trends, guild="pelagic", cap_year, cap_month , return_data = FALSE)
+trends2 <- trends %>% filter(StockKeyLabel != "bsf.27.nea") 
+trends2 <- trends2 %>% filter(StockKeyLabel != "her.27.6aS7bc") 
+
+plot_stock_trends(trends2, guild="pelagic", cap_year, cap_month , return_data = FALSE)
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_Trends_pelagic", ext = "png", dir = "report"), width = 178, height = 130, units = "mm", dpi = 300)
 
 dat <- plot_stock_trends(trends, guild="pelagic", cap_year, cap_month, return_data = TRUE)
@@ -59,7 +59,8 @@ write.taf(dat,file =file_name(cap_year,ecoreg_code,"SAG_Trends_pelagic", ext = "
 
 # 3. Benthic
 #~~~~~~~~~~~
-plot_stock_trends(trends, guild="benthic", cap_year, cap_month ,return_data = FALSE )
+trends2 <- trends %>% filter(StockKeyLabel != "anf.27.3a46") 
+plot_stock_trends(trends2, guild="benthic", cap_year, cap_month ,return_data = FALSE )
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_Trends_benthic", ext = "png", dir = "report"),  width = 178, height = 130, units = "mm", dpi = 300)
 
 dat <- plot_stock_trends(trends, guild="benthic", cap_year , cap_month , return_data = TRUE)
@@ -259,7 +260,7 @@ png(file_name(cap_year,ecoreg_code,"SAG_Current_All", ext = "png", dir = "report
     res = 300)
 p1_plot<-gridExtra::grid.arrange(kobe,
                                  bar, ncol = 2,
-                                 respect = TRUE, top = "All stocks")
+                                 respect = TRUE, top = "All stocks top 10")
 dev.off()
 
 
@@ -312,9 +313,9 @@ plot_GES_pies(clean_status, catch_current, cap_month, cap_year)
 
 unique(clean_status$FishingPressure)
 unique(clean_status$StockSize)
-clean_status2 <- clean_status
-clean_status2$StockSize <- gsub("qual_RED", "RED", clean_status2$StockSize) 
-plot_GES_pies(clean_status2, catch_current, cap_month, cap_year)
+# clean_status2 <- clean_status
+# clean_status2$StockSize <- gsub("qual_RED", "RED", clean_status2$StockSize) 
+# plot_GES_pies(clean_status2, catch_current, cap_month, cap_year)
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_GESpies", ext = "png", dir = "report"), width = 178, height = 178, units = "mm", dpi = 300)
 # ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_GESpies", ext = "png"),path = "report", width = 178, height = 178, units = "mm",dpi = 300)
 

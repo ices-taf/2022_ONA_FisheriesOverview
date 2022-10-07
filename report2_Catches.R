@@ -19,7 +19,7 @@ catch_dat <- read.taf("data/catch_dat.csv")
 
 # I will remove preliminary catches because most of it drops to zero
 
-catch_dat2 <- catch_dat %>% filter(YEAR < 2020)
+catch_dat2 <- catch_dat %>% filter(YEAR < 2021)
 
 #~~~~~~~~~~~~~~~#
 # By common name

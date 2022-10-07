@@ -41,9 +41,6 @@ write.taf(official, file = "ICES_2006_2019_catches.csv", quote = TRUE)
 #         out
 # }
 
-prelim <- load_preliminary_catches(2020)
+prelim <- load_preliminary_catches(2021)
 write.taf(preliminary, file = "ICES_preliminary_catches.csv", quote = TRUE)
-=======
-prelim <- load_preliminary_catches(2020)
-write.taf(prelim, file = "ICES_preliminary_catches.csv", quote = TRUE)
->>>>>>> 6437da26e7000e8a79c6e6fff27270440804103c
+
