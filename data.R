@@ -148,10 +148,17 @@ clean_status_2021 <- format_sag_status(status, 2021, "Oceanic Northeast Atlantic
 
 stocks <- clean_status_2021 %>% filter(StockKeyLabel %in% c("raj.27.67a-ce-h", "rjb.27.67a-ce-k", "rjb.27.89a"))#, "", ""))
 
+#adding also ank.27.78abd"
+ank <-  clean_status_2021 %>% filter(StockKeyLabel %in% c("ank.27.78abd"))
+ank$StockSize <- "GREEN" ##################################################please check these two symbols with Adriana
+ank$SBL <- "GREEN"
 
 clean_status_updated <- unique(rbind(clean_status, stocks))
-clean_status_updated <- clean_status %>% bind_rows(stocks,anti_join(clean_status,stocks,by= c("StockKeyLabel","lineDescription")))
-check <- clean_status_updated %>% filter(StockKeyLabel  %in% c("raj.27.67a-ce-h", "rjb.27.67a-ce-k", "rjb.27.89a"))#
+clean_status_updated <- unique(rbind(clean_status_updated, ank))
+# clean_status_updated <- clean_status %>% bind_rows(stocks,anti_join(clean_status,stocks,by= c("StockKeyLabel","lineDescription")))
+check <- clean_sag %>% filter(StockKeyLabel  %in% c("raj.27.67a-ce-h", "rjb.27.67a-ce-k", "rjb.27.89a", "ank.27.78abd"))#
+
+
 # dim(clean_status)
 # dim(clean_status_updated)
 clean_status_updated <- clean_status_updated[order(clean_status_updated$StockKeyLabel),]

@@ -297,7 +297,10 @@ ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_Discards", ext = "png", dir 
 plot_status_prop_pies(clean_status, cap_month, cap_year)
 unique(clean_status$StockSize)
 clean_status$StockSize <- gsub("qual_RED", "RED", clean_status$StockSize)
+clean_status_updated$StockSize <- gsub("qual_RED", "RED", clean_status_updated$StockSize)
+
 plot_status_prop_pies(clean_status, cap_month, cap_year)
+plot_status_prop_pies(clean_status_updated, cap_month, cap_year)
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_ICESpies", ext = "png", dir = "report"),  width = 178, height = 178, units = "mm", dpi = 300)
 # ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_ICESpies", ext = "png"), path= "report/", width = 178, height = 178, units = "mm", dpi = 300)
 
@@ -311,6 +314,7 @@ write.taf(dat, file= file_name(cap_year,ecoreg_code,"SAG_ICESpies", ext = "csv",
 #Need to change order and fix numbers
 plot_GES_pies(clean_status, catch_current, cap_month, cap_year)
 
+plot_GES_pies(clean_status_updated, catch_current, cap_month, cap_year)
 unique(clean_status$FishingPressure)
 unique(clean_status$StockSize)
 # clean_status2 <- clean_status
