@@ -100,6 +100,7 @@ sag_status <- read.taf("bootstrap/data/SAG_data/SAG_status.csv")
 clean_sag <- format_sag(sag_complete, sid)
 clean_status <- format_sag_status(status, 2022, "Oceanic Northeast Atlantic")
 
+
 ONA_out <- c("cap.27.2a514",
              "cod.2127.1f14",
              "mur.27.67a-ce-k89a",
@@ -141,13 +142,31 @@ ONA_out <- c("cap.27.2a514",
              "bli.27.5b67",
              "reb.27.14b"
 )
-clean_sag <- dplyr::filter(clean_sag, !StockKeyLabel %in% ONA_out)
-clean_status <- dplyr::filter(clean_status, !StockKeyLabel %in% ONA_out)
 
-check <- unique(clean_sag$StockKeyLabel)
-unique(clean_status$StockKeyLabel)
+### missing elasmo stocks raj.27.67a-ce-h, rjb.27.67a-ce-k, rjb.27.89a
+clean_status_2021 <- format_sag_status(status, 2021, "Oceanic Northeast Atlantic")
+
+stocks <- clean_status_2021 %>% filter(StockKeyLabel %in% c("raj.27.67a-ce-h", "rjb.27.67a-ce-k", "rjb.27.89a"))#, "", ""))
+
+
+clean_status_updated <- unique(rbind(clean_status, stocks))
+clean_status_updated <- clean_status %>% bind_rows(stocks,anti_join(clean_status,stocks,by= c("StockKeyLabel","lineDescription")))
+check <- clean_status_updated %>% filter(StockKeyLabel  %in% c("raj.27.67a-ce-h", "rjb.27.67a-ce-k", "rjb.27.89a"))#
+# dim(clean_status)
+# dim(clean_status_updated)
+clean_status_updated <- clean_status_updated[order(clean_status_updated$StockKeyLabel),]
+########################################################################
+
+
+
+clean_sag <- dplyr::filter(clean_sag, !StockKeyLabel %in% ONA_out)
+clean_status_updated <- dplyr::filter(clean_status_updated, !StockKeyLabel %in% ONA_out) ### using an updated version of clean_status just to produce the new annex table
+# unique(clean_sag$StockKeyLabel)
+# unique(clean_status_updated$StockKeyLabel)
+setdiff(clean_sag$StockKeyLabel,clean_status_updated$StockKeyLabel)
+#[1] "lin.27.3a4a6-91214" "ank.27.78abd"       "rjc.27.8"           "her.27.6aS7bc"
 # write.csv(check, file = "ONA_Stock_list.csv")
 
 
-write.taf(clean_sag, dir = "data")
-write.taf(clean_status, dir = "data", quote = TRUE)
+write.taf(clean_sag, dir = "data", quote = TRUE)
+write.taf(clean_status_updated, dir = "data", quote = TRUE)

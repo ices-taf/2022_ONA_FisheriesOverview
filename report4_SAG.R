@@ -329,7 +329,7 @@ write.taf(dat, file = file_name(cap_year,ecoreg_code,"SAG_GESpies", ext = "csv",
 ################################################# NOT WORKING unless I copy and run the devel
 #### version of format_annex_table
 
-dat <- format_annex_table(clean_status, year)
+dat <- format_annex_table(clean_status_updated, year)
 
 write.taf(dat, file = file_name(cap_year,ecoreg_code,"SAG_annex_table", ext = "csv", dir = "report"), quote = TRUE)
 
@@ -337,3 +337,4 @@ format_annex_table_html(dat, cap_year, ecoreg_code)
 # This annex table has to be edited by hand,
 # For SBL and GES only one values is reported,
 # the one in PA for SBL and the one in MSY for GES
+

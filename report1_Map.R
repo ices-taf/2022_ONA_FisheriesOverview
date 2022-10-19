@@ -9,21 +9,12 @@ library(dplyr)
 source("bootstrap/utilities.r")
 
 # set values for automatic naming of files:
-cap_year <- 2021
+cap_year <- 2022
 cap_month <- "November"
 ecoreg_code <- "ONA"
-ecoreg <- "ONA"
+
 
 mkdir("report")
-
-# set values for automatic naming of files:
-<<<<<<< HEAD
-year_cap = "2021"
-ecoreg = "ONA"
-=======
-# year_cap = "2020"
-# ecoreg = "ONA"
->>>>>>> 6437da26e7000e8a79c6e6fff27270440804103c
 
 ##########
 #Load data
