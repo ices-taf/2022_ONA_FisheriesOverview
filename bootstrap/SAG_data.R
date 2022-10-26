@@ -7,3 +7,5 @@ sag_complete <- out
 
 status <- load_sag_status(2022)
 write.taf(status, file = "SAG_status.csv", quote = TRUE)
+
+# status21 <- load_sag_status(2021)

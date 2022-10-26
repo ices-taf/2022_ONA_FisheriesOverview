@@ -60,7 +60,7 @@ write.taf(dat,file =file_name(cap_year,ecoreg_code,"SAG_Trends_pelagic", ext = "
 # 3. Benthic
 #~~~~~~~~~~~
 trends2 <- trends %>% filter(StockKeyLabel != "anf.27.3a46") 
-plot_stock_trends(trends2, guild="benthic", cap_year, cap_month ,return_data = FALSE )
+plot_stock_trends(trends, guild="benthic", cap_year, cap_month ,return_data = FALSE )
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_Trends_benthic", ext = "png", dir = "report"),  width = 178, height = 130, units = "mm", dpi = 300)
 
 dat <- plot_stock_trends(trends, guild="benthic", cap_year , cap_month , return_data = TRUE)
@@ -268,18 +268,26 @@ dev.off()
 # C. Discards
 #~~~~~~~~~~~~~~~#
 discardsA <- plot_discard_trends(catch_trends, year, cap_year, cap_month )
+catch_trends <- unique(catch_trends)
+catch_trends$ID <- paste0(catch_trends$Year,catch_trends$StockKeyLabel,catch_trends$FisheriesGuild)
+catch_trends <- catch_trends %>% arrange(rowSums(is.na(.))) %>% distinct(ID, .keep_all = TRUE)
+
 catch_trends2 <- catch_trends %>% filter(FisheriesGuild != "elasmobranch")
+
 discardsA <- plot_discard_trends(catch_trends2, year, cap_year, cap_month )
 
-dat <- plot_discard_trends(catch_trends, year, cap_year , cap_month , return_data = TRUE)
+dat <- plot_discard_trends(catch_trends2, year, cap_year , cap_month , return_data = TRUE)
 
 write.taf(dat, file =file_name(cap_year,ecoreg_code,"SAG_Discards_trends", ext = "csv", dir = "report" ))
 
-df5 <- df %>% filter(discards > 0)
-catch_trends3 <- catch_trends2 %>% filter(discards > 0)
-discardsB <- plot_discard_current(catch_trends3, year,position_letter = "b)", cap_year , cap_month , caption = FALSE)
+catch_trends3 <- catch_trends2 %>% filter(Discards > 0)
+df5 <- catch_trends3
+discardsB <- plot
+# discardsB <- plot_discard_current(catch_trends3, year,position_letter = "b)", cap_year , cap_month , caption = FALSE)
 
-discardsC <- plot_discard_current(catch_trends2, year,position_letter = "c)", cap_year , cap_month , caption = TRUE)
+df5 <- catch_trends2
+discardsC <- plot
+# discardsC <- plot_discard_current(catch_trends2, year,position_letter = "c)", cap_year , cap_month , caption = TRUE)
 
 #Need to change order?
 dat <- plot_discard_current(catch_trends, year, cap_year, cap_month , return_data = TRUE)
