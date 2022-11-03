@@ -51,6 +51,14 @@ write.taf(dat, file = file_name(cap_year,ecoreg_code,"SAG_Trends_demersal", ext 
 trends2 <- trends %>% filter(StockKeyLabel != "bsf.27.nea") 
 trends2 <- trends2 %>% filter(StockKeyLabel != "her.27.6aS7bc") 
 
+##### eliminate year 2022 for F and 2023 for SSB for whb.27.1-91214
+trends2 <- trends2[!(trends2$StockKeyLabel == "whb.27.1-91214" & trends2$Metric == "F_FMEAN" & trends2$Year == 2022) &
+                !(trends2$StockKeyLabel == "whb.27.1-91214" & trends2$Metric == "F_FMSY" & trends2$Year == 2022) &
+                !(trends2$StockKeyLabel == "MEAN" & trends2$Metric == "F_FMSY" & trends2$Year == 2022) &
+                !(trends2$StockKeyLabel == "whb.27.1-91214" & trends2$Metric == "SSB_MSYBtrigger" & trends2$Year == 2023) &
+                !(trends2$StockKeyLabel == "MEAN" & trends2$Metric == "SSB_MSYBtrigger" & trends2$Year == 2023),]
+
+
 plot_stock_trends(trends2, guild="pelagic", cap_year, cap_month , return_data = FALSE)
 ggplot2::ggsave(file_name(cap_year,ecoreg_code,"SAG_Trends_pelagic", ext = "png", dir = "report"), width = 178, height = 130, units = "mm", dpi = 300)
 
