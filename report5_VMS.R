@@ -56,7 +56,8 @@ effort <-
       ),
     mw_fishinghours = as.numeric(mw_fishinghours)
   ) %>%
-  filter(!is.na(mw_fishinghours))
+  filter(!is.na(mw_fishinghours)) %>% 
+  filter(mw_fishinghours != 0)
 
 # write layer
 write_layer <- function(dat, fname) {
@@ -73,7 +74,7 @@ plot_effort_map(effort, ecoregion) +
   ggtitle("Average MW Fishing hours 2018-2021")
 
 
-ggsave(file_name(cap_year,ecoreg_code,"VMS_effort", ext = "png", dir = "report"), width = 170, height = 200, units = "mm", dpi = 300)
+ggsave(file_name(cap_year,ecoreg_code,"VMS_effort_updated", ext = "png", dir = "report"), width = 170, height = 200, units = "mm", dpi = 300)
 # ~~~~~~~~~~~~~~~#
 # A. Swept area map
 # ~~~~~~~~~~~~~~~#
